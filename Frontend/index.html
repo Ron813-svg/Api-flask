@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,12 +12,15 @@
             background-color: #f4f4f9;
             color: #333;
         }
-        input, button {
+
+        input,
+        button {
             padding: 10px;
             margin: 5px 0;
             width: 100%;
             max-width: 300px;
         }
+
         button {
             cursor: pointer;
             background-color: #007BFF;
@@ -25,14 +29,17 @@
             border-radius: 5px;
             font-size: 16px;
         }
+
         button:hover {
             background-color: #0056b3;
         }
+
         #resultado {
             margin-top: 10px;
         }
     </style>
 </head>
+
 <body>
     <h2>Conversión de Temperatura</h2>
     <p>Ingrese la temperatura en Celsius para convertirla a Fahrenheit:</p>
@@ -42,23 +49,23 @@
 
     <script>
         async function convertir() {
-            let celsius = document.getElementById("celsius").value;
+            let celsius = parseFloat(document.getElementById("celsius").value);
             let resultado = document.getElementById("resultado");
 
-     
-            if (celsius === "") {
-                resultado.innerHTML = "<span style='color: red;'>Por favor, ingrese un número</span>";
+
+            if (celsius === "" || isNaN(celsius)) {
+                resultado.innerHTML = "<span style='color: red;'>Por favor, ingrese un número válido</span>";
                 return;
             }
 
             try {
-              
+                console.log("Valor enviado:", celsius, typeof celsius);
                 let response = await fetch("http://127.0.0.1:5000/api/predict", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ "celsius": celsius })
+                    body: JSON.stringify({ celsius: celsius })
                 });
 
                 if (response.ok) {
@@ -74,4 +81,5 @@
         }
     </script>
 </body>
+
 </html>

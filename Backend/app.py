@@ -1,19 +1,12 @@
-#from flask import Flask, jsonify, request
-#from flask_cors import CORS
+from flask import Flask
+from flask_cors import CORS
+from routes.temperature_routes import temperature_bp
 
-#app = Flask(__name__)
-#CORS(app)
+app = Flask(__name__)
 
-#@app.route('/api/saludo', methods=['GET'])
+CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
-#def saludo():
- #   return jsonify({"Mensaje": "Hola mundo"})
+app.register_blueprint(temperature_bp)
 
-#@app.route('/api/suma', methods=['POST'])
-#def suma():
-    #data = request.get_json()
-    #requestResult = data['num1'] + data['num2']
-    #return jsonify({"Resultado": requestResult})
-
-#if __name__ == '__main__':
-    #app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
